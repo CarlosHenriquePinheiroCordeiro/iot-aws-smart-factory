@@ -29,10 +29,10 @@ I used it because I believe that smart factory machines must have an app that ca
 ## Project Checklist
 
 - [ ] **Backend:**
-  - [ ] Authentication
+  - :white_check_mark: Authentication
 
 - [ ] **Frontend:**
-  - [ ] Authentication
+  - :white_check_mark: Authentication
 
 ---
 
