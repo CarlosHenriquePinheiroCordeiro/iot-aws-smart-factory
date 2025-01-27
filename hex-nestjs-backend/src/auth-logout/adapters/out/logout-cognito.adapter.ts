@@ -1,7 +1,6 @@
 import { HttpStatus } from '@nestjs/common';
 import { Injectable } from '@nestjs/common/decorators/core';
 import { LogoutPort } from 'src/auth-logout/application/ports/out/logout.port';
-import { LogoutDto } from 'src/auth-logout/dto/logout.dto';
 import { AwsCognitoService } from 'src/aws-cognito/aws-cognito.service';
 
 @Injectable()
@@ -10,12 +9,12 @@ export class LogoutCognitoAdapter extends LogoutPort {
     super();
   }
 
-  async logout(logoutDto: LogoutDto): Promise<any> {
+  async logout(token: string): Promise<any> {
     try {
       await this.cognitoService
         .getCognito()
         .globalSignOut({
-          AccessToken: logoutDto.token,
+          AccessToken: token,
         })
         .promise();
       return {
