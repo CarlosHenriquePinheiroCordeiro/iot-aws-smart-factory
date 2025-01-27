@@ -1,5 +1,6 @@
 // src/context/AuthContext.tsx
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState } from "react";
+import api from "../api/api";
 
 interface AuthContextValue {
   isAuthenticated: boolean;
@@ -19,7 +20,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const isAuthenticated = !!accessToken;
 
-  // Called after a successful login to store tokens in localStorage
   const login = (newAccessToken: string, newRefreshToken: string) => {
     setAccessToken(newAccessToken);
     setRefreshToken(newRefreshToken);
@@ -27,8 +27,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.setItem("refreshToken", newRefreshToken);
   };
 
-  // Clears tokens for logout
   const logout = () => {
+    api.delete("/logout", {data: { token: localStorage.getItem('accessToken') }})
     setAccessToken(null);
     setRefreshToken(null);
     localStorage.removeItem("accessToken");
@@ -42,7 +42,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   );
 };
 
-// Custom hook for consuming AuthContext
 export const useAuth = (): AuthContextValue => {
   const context = useContext(AuthContext);
   if (!context) {

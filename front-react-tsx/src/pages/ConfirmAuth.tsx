@@ -21,7 +21,7 @@ const ConfirmAuth: React.FC = () => {
 
     try {
       setIsLoading(true);
-      const response = await api.post("http://localhost:3001/confirm", {
+      const response = await api.patch("http://localhost:3001/confirm", {
         email,
         code,
       });
