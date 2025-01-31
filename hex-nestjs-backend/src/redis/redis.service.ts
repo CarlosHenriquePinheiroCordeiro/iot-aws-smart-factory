@@ -1,4 +1,3 @@
-// redis.service.ts
 import { Injectable } from '@nestjs/common';
 import { createClient } from 'redis';
 
@@ -8,7 +7,7 @@ export class RedisService {
 
   constructor() {
     this.client = createClient({
-      url: process.env.REDIS_URL,
+      url: `${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
     });
     this.client.connect();
   }

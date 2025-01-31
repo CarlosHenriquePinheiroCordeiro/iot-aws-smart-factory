@@ -9,6 +9,6 @@ async function bootstrap() {
     credentials: true,
     allowedHeaders: 'Content-Type, Accept, Authorization',
   });
-  await app.listen(process.env.PORT ?? 3001);
+  await app.listen(process.env.PORT!);
 }
 bootstrap();
