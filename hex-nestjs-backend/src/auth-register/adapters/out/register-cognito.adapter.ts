@@ -1,8 +1,8 @@
 import { HttpStatus } from '@nestjs/common';
 import { Injectable } from '@nestjs/common/decorators/core';
-import { RegisterPort } from 'src/auth-register/application/ports/out/register.port';
-import { RegisterDto } from 'src/auth-register/dto/register.dto';
-import { AwsCognitoService } from 'src/aws-cognito/aws-cognito.service';
+import { RegisterPort } from '../../application/ports/out/register.port';
+import { RegisterDto } from '../../dto/register.dto';
+import { AwsCognitoService } from '../../../aws-cognito/aws-cognito.service';
 
 @Injectable()
 export class RegisterCognitoAdapter extends RegisterPort {

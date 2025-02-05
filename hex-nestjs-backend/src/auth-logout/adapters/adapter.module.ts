@@ -4,8 +4,8 @@ import { AuthLogoutApplicationModule } from '../application/application.module';
 import { LogoutController } from './in/web/logout.controller';
 import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common/decorators/modules';
-import { AwsCognitoModule } from 'src/aws-cognito/aws-cognito.module';
-import { RedisModule } from 'src/redis/redis.module';
+import { AwsCognitoModule } from '../../aws-cognito/aws-cognito.module';
+import { RedisModule } from '../../redis/redis.module';
 
 @Module({
   imports: [

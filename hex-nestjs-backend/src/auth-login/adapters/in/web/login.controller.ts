@@ -1,9 +1,9 @@
 import { Controller } from '@nestjs/common/decorators/core';
 import { Body, Post, Res } from '@nestjs/common/decorators/http';
 import { HttpResponse } from 'aws-sdk';
-import { LoginUseCase } from 'src/auth-login/application/ports/in/login.use-case';
-import { LoginDto } from 'src/auth-login/dto/login.dto';
-import { IHttpResponse } from 'src/interfaces/http-response.interface';
+import { LoginUseCase } from '../../../application/ports/in/login.use-case';
+import { LoginDto } from '../../../dto/login.dto';
+import { IHttpResponse } from '../../../../interfaces/http-response.interface';
 import { Response } from 'express';
 
 @Controller('login')

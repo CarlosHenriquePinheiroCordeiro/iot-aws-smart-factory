@@ -1,9 +1,8 @@
 import { HttpStatus } from '@nestjs/common';
 import { Injectable } from '@nestjs/common/decorators/core';
-import { LoginPort } from 'src/auth-login/application/ports/out/login.port';
-import { LoginDto } from 'src/auth-login/dto/login.dto';
-import { AwsCognitoService } from 'src/aws-cognito/aws-cognito.service';
-
+import { LoginPort } from '../../application/ports/out/login.port';
+import { LoginDto } from '../../dto/login.dto';
+import { AwsCognitoService } from '../../../aws-cognito/aws-cognito.service';
 @Injectable()
 export class LoginCognitoAdapter extends LoginPort {
   constructor(private readonly cognitoService: AwsCognitoService) {

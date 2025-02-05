@@ -1,9 +1,9 @@
 import { Controller } from '@nestjs/common/decorators/core';
 import { Body, Patch, Res } from '@nestjs/common/decorators/http';
-import { ConfirmUseCase } from 'src/auth-confirm/application/ports/in/confirm.use-case';
-import { ConfirmDto } from 'src/auth-confirm/dto/confirm.dto';
+import { ConfirmUseCase } from '../../../application/ports/in/confirm.use-case';
+import { ConfirmDto } from '../../../dto/confirm.dto';
 import { Response } from 'express';
-import { IHttpResponse } from 'src/interfaces/http-response.interface';
+import { IHttpResponse } from '../../../../interfaces/http-response.interface';
 
 @Controller('confirm')
 export class ConfirmController {

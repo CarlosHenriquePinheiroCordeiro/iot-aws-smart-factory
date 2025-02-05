@@ -5,7 +5,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { CognitoJwtVerifier } from 'aws-jwt-verify';
-import { RedisService } from 'src/redis/redis.service';
+import { RedisService } from '../redis/redis.service';
 
 @Injectable()
 export class CognitoAuthGuard implements CanActivate {
@@ -21,7 +21,7 @@ export class CognitoAuthGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request: Request = context.switchToHttp().getRequest();
-    const authHeader = request.headers['authorization'];
+    const authHeader = request.headers.get('authorization');
     if (!authHeader) {
       throw new UnauthorizedException('Missing Authorization header');
     }
@@ -42,7 +42,7 @@ export class CognitoAuthGuard implements CanActivate {
       Object.assign(request, { user: payload });
       this.saveCache(token as string, payload, payload.exp as number);
       return true;
-    } catch (error) {
+    } catch (error: any) {
       throw new UnauthorizedException(error.message);
     }
   }

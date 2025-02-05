@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Response } from 'express';
-import { ConfirmController } from 'src/auth-confirm/adapters/in/web/confirm.controller';
-import { ConfirmUseCase } from 'src/auth-confirm/application/ports/in/confirm.use-case';
-import { ConfirmDto } from 'src/auth-confirm/dto/confirm.dto';
-import { IHttpResponse } from 'src/interfaces/http-response.interface';
+import { ConfirmController } from '../../../../../../src/auth-confirm/adapters/in/web/confirm.controller';
+import { ConfirmUseCase } from '../../../../../../src/auth-confirm/application/ports/in/confirm.use-case';
+import { ConfirmDto } from '../../../../../../src/auth-confirm/dto/confirm.dto';
+import { IHttpResponse } from '../../../../../../src/interfaces/http-response.interface';
 
 describe('ConfirmController', () => {
   let controller: ConfirmController;
