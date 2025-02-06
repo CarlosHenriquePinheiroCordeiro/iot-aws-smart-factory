@@ -1,6 +1,7 @@
 {
-    "watch": ["src"],
-    "ext": "js,json",
-    "ignore": ["node_modules", ".docker", "dist"]
-  }
-  
+  "watch": ["."],
+  "ext": "js,json",
+  "exec": "node server.js",
+  "legacy-watch": true,
+  "delay": "500"
+}

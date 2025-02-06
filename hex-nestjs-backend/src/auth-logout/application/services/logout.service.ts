@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common/decorators/core';
 import { LogoutUseCase } from '../ports/in/logout.use-case';
 import { LogoutPort } from '../ports/out/logout.port';
+import 'reflect-metadata';
 
 @Injectable()
 export class LogoutService implements LogoutUseCase {

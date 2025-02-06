@@ -6,6 +6,8 @@ const config = {
     transform: {
         '^.+\\.ts$': 'ts-jest',
     },
+    setupFiles: ['reflect-metadata'],
+    setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
     extensionsToTreatAsEsm: ['.ts'],
     globals: {
         'ts-jest': {

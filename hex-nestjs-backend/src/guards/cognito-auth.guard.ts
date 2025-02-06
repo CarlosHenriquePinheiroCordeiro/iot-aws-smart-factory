@@ -20,8 +20,8 @@ export class CognitoAuthGuard implements CanActivate {
   }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const request: Request = context.switchToHttp().getRequest();
-    const authHeader = request.headers.get('authorization');
+    const request: any = context.switchToHttp().getRequest();
+    const authHeader = request.headers['authorization'];
     if (!authHeader) {
       throw new UnauthorizedException('Missing Authorization header');
     }

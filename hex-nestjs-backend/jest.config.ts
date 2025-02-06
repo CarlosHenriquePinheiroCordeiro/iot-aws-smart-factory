@@ -6,6 +6,7 @@ const config: JestConfigWithTsJest = {
   transform: {
     '^.+\\.ts$': 'ts-jest',
   },
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   extensionsToTreatAsEsm: ['.ts'],
   globals: {
     'ts-jest': {

@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common/decorators/core';
 import { LoginUseCase } from '../ports/in/login.use-case';
 import { LoginPort } from '../ports/out/login.port';
 import { LoginDto } from '../../dto/login.dto';
+import 'reflect-metadata';
 
 @Injectable()
 export class LoginService implements LoginUseCase {
