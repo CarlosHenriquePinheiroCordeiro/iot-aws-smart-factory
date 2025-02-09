@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common/decorators/modules';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { AwsCognitoModule } from './aws-cognito/aws-cognito.module';
 import { AuthRegisterModule } from './auth-register/auth.module';
@@ -20,7 +18,7 @@ import { AuthLogoutModule } from './auth-logout/auth.module';
     AuthLogoutModule,
     AwsCognitoModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

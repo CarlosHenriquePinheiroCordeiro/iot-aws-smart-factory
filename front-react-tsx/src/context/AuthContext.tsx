@@ -1,4 +1,3 @@
-// src/context/AuthContext.tsx
 import React, { createContext, useContext, useState } from "react";
 import api from "../api/api";
 
@@ -27,8 +26,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.setItem("refreshToken", newRefreshToken);
   };
 
-  const logout = () => {
-    api.delete("/logout", {data: { token: localStorage.getItem('accessToken') }})
+  const logout = async () => {
+    await api.delete("/logout", {data: { token: localStorage.getItem('accessToken') }})
     setAccessToken(null);
     setRefreshToken(null);
     localStorage.removeItem("accessToken");

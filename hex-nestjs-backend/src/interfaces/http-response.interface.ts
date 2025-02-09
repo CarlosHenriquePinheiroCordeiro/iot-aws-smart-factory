@@ -3,4 +3,5 @@ export interface IHttpResponse {
   message: string;
   timestamp: string;
   path: string;
+  data: Object;
 }

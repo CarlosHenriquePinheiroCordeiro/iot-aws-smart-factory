@@ -1,9 +1,9 @@
 import { HttpStatus } from '@nestjs/common';
 import { Injectable } from '@nestjs/common/decorators/core';
-import { ConfirmPort } from 'src/auth-confirm/application/ports/out/confirm.port';
-import { ConfirmDto } from 'src/auth-confirm/dto/confirm.dto';
-import { AwsCognitoService } from 'src/aws-cognito/aws-cognito.service';
-import { IHttpResponse } from 'src/interfaces/http-response.interface';
+import { ConfirmPort } from '../../application/ports/out/confirm.port';
+import { ConfirmDto } from '../../dto/confirm.dto';
+import { AwsCognitoService } from '../../../aws-cognito/aws-cognito.service';
+import { IHttpResponse } from '../../../interfaces/http-response.interface';
 
 @Injectable()
 export class ConfirmCognitoAdapter extends ConfirmPort {

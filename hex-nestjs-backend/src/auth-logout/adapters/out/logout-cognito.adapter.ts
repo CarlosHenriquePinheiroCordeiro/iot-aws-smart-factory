@@ -1,7 +1,7 @@
 import { HttpStatus } from '@nestjs/common';
 import { Injectable } from '@nestjs/common/decorators/core';
-import { LogoutPort } from 'src/auth-logout/application/ports/out/logout.port';
-import { AwsCognitoService } from 'src/aws-cognito/aws-cognito.service';
+import { LogoutPort } from '../../application/ports/out/logout.port';
+import { AwsCognitoService } from '../../../aws-cognito/aws-cognito.service';
 
 @Injectable()
 export class LogoutCognitoAdapter extends LogoutPort {
@@ -25,7 +25,7 @@ export class LogoutCognitoAdapter extends LogoutPort {
     }
   }
 
-  getLogoutException(exception) {
+  getLogoutException(exception: any) {
     let statusCode = HttpStatus.BAD_REQUEST;
     let message = 'Bad Request';
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access

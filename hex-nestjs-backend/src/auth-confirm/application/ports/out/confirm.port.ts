@@ -1,4 +1,4 @@
-import { ConfirmDto } from 'src/auth-confirm/dto/confirm.dto';
+import { ConfirmDto } from '../../../dto/confirm.dto';
 
 export abstract class ConfirmPort {
   abstract confirm(confirmDto: ConfirmDto): any;
