@@ -1,3 +1,4 @@
+// src/App.tsx
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
@@ -6,17 +7,20 @@ import Register from "./pages/Register";
 import ConfirmAuth from "./pages/ConfirmAuth";
 import Login from "./pages/Login";
 import ProtectedRoute from "./routes/ProtectedRoute";
+import { LoadingProvider, useLoading } from "./context/LoadingContext";
+import LoadingOverlay from "./components/LoadingOverlay/LoadingOverlay";
 
-function App() {
+const AppContent: React.FC = () => {
+  const { isGlobalLoading, loadingMessage } = useLoading();
+
   return (
-    <AuthProvider>
+    <>
+      {isGlobalLoading && <LoadingOverlay message={loadingMessage} />}
       <Router>
         <Routes>
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/confirmAuth" element={<ConfirmAuth />} />
-
-          {/* Protect the Home route */}
           <Route
             path="/home"
             element={
@@ -25,11 +29,19 @@ function App() {
               </ProtectedRoute>
             }
           />
-
-          {/* Redirect any unknown route to /login, or create a 404 page */}
           <Route path="*" element={<Login />} />
         </Routes>
       </Router>
+    </>
+  );
+};
+
+function App() {
+  return (
+    <AuthProvider>
+      <LoadingProvider>
+        <AppContent />
+      </LoadingProvider>
     </AuthProvider>
   );
 }

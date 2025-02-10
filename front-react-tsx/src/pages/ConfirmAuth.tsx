@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import api from "../api/api";
 import { useLocation } from "react-router-dom";
-import LoadingSpinner from "../components/LoadingSpinner";
+import LoadingSpinner from "../components/LoadingOverlay/LoadingOverlay";
 
 const ConfirmAuth: React.FC = () => {
   const { login } = useAuth();
