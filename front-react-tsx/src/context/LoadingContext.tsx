@@ -1,26 +1,31 @@
 import { createContext, useState, useContext, ReactNode } from 'react';
+import NanoLoadingAnimation from '../components/animations/NanoLoadingAnimation';
 
 interface LoadingContextProps {
   isGlobalLoading: boolean;
-  loadingMessage: string;
-  setGlobalLoading: (loading: boolean, message?: string) => void;
+  loadingComponent: any;
+  setLoadingComponent: (component: any) => void;
+  setGlobalLoading: (loading: boolean, component?: any) => void;
 }
 
 const LoadingContext = createContext<LoadingContextProps | undefined>(undefined);
 
 export const LoadingProvider = ({ children }: { children: ReactNode }) => {
-  const [isGlobalLoading, setIsGlobalLoading] = useState(true);
-  const [loadingMessage, setLoadingMessage] = useState('Loading...');
+  const [isGlobalLoading, setIsGlobalLoading] = useState(false);
+  const [loadingComponent, setLoadComponent] = useState(<NanoLoadingAnimation />)
 
-  const setGlobalLoading = (loading: boolean, message?: string) => {
+  const setGlobalLoading = (loading: boolean) => {
     setIsGlobalLoading(loading);
-    if (message !== undefined) {
-      setLoadingMessage(message);
+  };
+
+  const setLoadingComponent = (component?: any) => {
+    if (component !== undefined) {
+      setLoadComponent(component);
     }
   };
 
   return (
-    <LoadingContext.Provider value={{ isGlobalLoading, loadingMessage, setGlobalLoading }}>
+    <LoadingContext.Provider value={{ isGlobalLoading, loadingComponent, setLoadingComponent, setGlobalLoading }}>
       {children}
     </LoadingContext.Provider>
   );

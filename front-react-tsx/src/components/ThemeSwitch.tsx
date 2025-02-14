@@ -1,20 +1,30 @@
 import React, { useState, useEffect } from 'react';
+import { useTheme } from '../context/ThemeContext';
+import { FaLightbulb } from "react-icons/fa";
 
 const ThemeSwitch: React.FC = () => {
-  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [theme, setActualTheme] = useState<'light' | 'dark'>('dark');
+  const { setTheme } = useTheme();
 
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-  }, [theme]);
+    setTheme(theme)
+  });
 
   const toggleTheme = () => {
-    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+    setActualTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
   };
 
   return (
-    <button className="btn btn-primary" onClick={toggleTheme}>
-      Switch to {theme === 'light' ? 'dark' : 'light'} mode
-    </button>
+    <label style={{fontSize: '40px'}} className="swap swap-rotate cursor-pointer">
+      <input
+        type="checkbox"
+        onChange={toggleTheme}
+        checked={theme === 'dark'}
+        className="hidden"
+      />
+      <FaLightbulb className='swap-on' />
+      <FaLightbulb className='swap-off' />
+    </label>
   );
 };
 

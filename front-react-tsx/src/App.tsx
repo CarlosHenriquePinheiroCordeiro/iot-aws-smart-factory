@@ -1,4 +1,3 @@
-// src/App.tsx
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
@@ -8,24 +7,41 @@ import ConfirmAuth from "./pages/ConfirmAuth";
 import Login from "./pages/Login";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import { LoadingProvider, useLoading } from "./context/LoadingContext";
-import LoadingOverlay from "./components/LoadingOverlay/LoadingOverlay";
+import { ThemeProvider } from "./context/ThemeContext";
+import LoadingOverlay from "./components/LoadingOverlay";
+import { LeftToRightTransition } from "./transitions/LeftToRightTransition";
+import { TopToBottomTransition } from "./transitions/TopToBottomTransition";
 
 const AppContent: React.FC = () => {
-  const { isGlobalLoading, loadingMessage } = useLoading();
+  const { isGlobalLoading, loadingComponent } = useLoading();
 
   return (
     <>
-      {isGlobalLoading && <LoadingOverlay message={loadingMessage} />}
+      {isGlobalLoading && <LoadingOverlay loadingComponent={loadingComponent} />}
       <Router>
         <Routes>
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/confirmAuth" element={<ConfirmAuth />} />
+
+          <Route path="/register" element={
+              <LeftToRightTransition>
+                <Register />
+              </LeftToRightTransition>
+            }
+          />
+          
+          <Route path="/login" element={<Login />}/>
+          <Route path="/confirmAuth" element={
+              <LeftToRightTransition>
+                <ConfirmAuth />
+              </LeftToRightTransition>
+            }
+          />
           <Route
             path="/home"
             element={
               <ProtectedRoute>
-                <Home />
+                <TopToBottomTransition>
+                  <Home />
+                </TopToBottomTransition>
               </ProtectedRoute>
             }
           />
@@ -39,9 +55,11 @@ const AppContent: React.FC = () => {
 function App() {
   return (
     <AuthProvider>
-      <LoadingProvider>
-        <AppContent />
-      </LoadingProvider>
+      <ThemeProvider>
+        <LoadingProvider>
+          <AppContent />
+        </LoadingProvider>
+      </ThemeProvider>
     </AuthProvider>
   );
 }
