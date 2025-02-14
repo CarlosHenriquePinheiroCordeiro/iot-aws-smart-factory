@@ -5,16 +5,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    volumes:
-      - .:/app
-      - dev_node_modules:/app/node_modules
     ports:
       - "${PORT}:${PORT}"
     environment:
       - NODE_ENV=development
       - REDIS_HOST=redis://dev-redis
       - REDIS_PORT=${REDIS_PORT}
-    command: nodemon --config nodemon.json server.js
     depends_on:
       - dev-redis
 
@@ -23,8 +19,6 @@ services:
     container_name: redis_service
     ports:
       - "${REDIS_PORT}:${REDIS_PORT}"
-    volumes:
-      - dev_redis_data:/data
 
 
 
