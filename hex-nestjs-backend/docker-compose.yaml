@@ -5,6 +5,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    volumes:
+      - .:/app
+      - dev_node_modules:/app/node_modules
     ports:
       - "${PORT}:${PORT}"
     environment:
@@ -13,6 +16,8 @@ services:
       - REDIS_PORT=${REDIS_PORT}
     depends_on:
       - dev-redis
+      - dev-pgsql
+    command: yarn start:dev
 
   dev-redis:
     image: redis:7-alpine
@@ -20,6 +25,18 @@ services:
     ports:
       - "${REDIS_PORT}:${REDIS_PORT}"
 
+  dev-pgsql:
+    image: bitnami/postgresql:latest
+    container_name: bitnami_postgresql
+    restart: always
+    environment:
+      - POSTGRESQL_USERNAME=${PGSQL_USERNAME}
+      - POSTGRESQL_PASSWORD=${PGSQL_PASS}
+      - POSTGRESQL_DATABASE=${PGSQL_DATABASE}
+    ports:
+      - "${PGSQL_PORT}:${PGSQL_PORT}"
+    volumes:
+      - postgresql_data:/bitnami/postgresql
 
 
   test-backend:
@@ -57,3 +74,5 @@ volumes:
   test_node_modules:
   dev_redis_data:
   test_redis_data:
+  postgresql_data:
+    driver: local

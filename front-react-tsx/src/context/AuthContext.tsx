@@ -27,7 +27,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const logout = async () => {
-    await api.delete("/logout", {data: { token: localStorage.getItem('accessToken') }})
+    await api.delete("/auth/logout", {data: { token: localStorage.getItem('accessToken') }})
     setAccessToken(null);
     setRefreshToken(null);
     localStorage.removeItem("accessToken");

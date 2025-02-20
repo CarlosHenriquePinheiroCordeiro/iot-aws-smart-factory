@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { HttpStatus } from '@nestjs/common';
-import { ConfirmCognitoAdapter } from '../../../../../src/auth-confirm/adapters/out/confirm-cognito.adapter';
-import { AwsCognitoService } from '../../../../../src/aws-cognito/aws-cognito.service';
-import { ConfirmDto } from '../../../../../src/auth-confirm/dto/confirm.dto';
+import { ConfirmCognitoAdapter } from '../../../../../src/auth/confirm/adapters/out/confirm-cognito.adapter';
+import { AwsCognitoService } from '../../../../../src/auth/aws-cognito/aws-cognito.service';
+import { ConfirmDto } from '../../../../../src/auth/confirm/dto/confirm.dto';
 import { IHttpResponse } from '../../../../../src/interfaces/http-response.interface';
 
 describe('ConfirmCognitoAdapter', () => {

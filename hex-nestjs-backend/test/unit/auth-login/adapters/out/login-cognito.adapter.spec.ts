@@ -1,5 +1,5 @@
 import { LoginCognitoAdapter } from '../../../../../src/auth-login/adapters/out/login-cognito.adapter';
-import { AwsCognitoService } from '../../../../../src/aws-cognito/aws-cognito.service';
+import { AwsCognitoService } from '../../../../../src/auth/aws-cognito/aws-cognito.service';
 import { LoginDto } from '../../../../../src/auth-login/dto/login.dto';
 import { Test, TestingModule } from '@nestjs/testing';
 import { HttpStatus } from '@nestjs/common';

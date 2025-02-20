@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ConfirmService } from '../../../../../src/auth-confirm/application/services/confirm.service';
-import { ConfirmPort } from '../../../../../src/auth-confirm/application/ports/out/confirm.port';
-import { ConfirmDto } from '../../../../../src/auth-confirm/dto/confirm.dto';
+import { ConfirmService } from '../../../../../src/auth/confirm/application/services/confirm.service';
+import { ConfirmPort } from '../../../../../src/auth/confirm/application/ports/out/confirm.port';
+import { ConfirmDto } from '../../../../../src/auth/confirm/dto/confirm.dto';
 
 describe('ConfirmService', () => {
   let service: ConfirmService;

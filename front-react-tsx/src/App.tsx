@@ -2,15 +2,17 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import Home from "./pages/Home";
-import Register from "./pages/Register";
-import ConfirmAuth from "./pages/ConfirmAuth";
-import Login from "./pages/Login";
+import Register from "./pages/auth/Register";
+import ConfirmAuth from "./pages/auth/ConfirmAuth";
+import Login from "./pages/auth/Login";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import { LoadingProvider, useLoading } from "./context/LoadingContext";
 import { ThemeProvider } from "./context/ThemeContext";
 import LoadingOverlay from "./components/LoadingOverlay";
 import { LeftToRightTransition } from "./transitions/LeftToRightTransition";
 import { TopToBottomTransition } from "./transitions/TopToBottomTransition";
+import Organizations from "./pages/organizations/Organizations";
+import OrganizationForm from "./pages/organizations/OrganizationForm";
 
 const AppContent: React.FC = () => {
   const { isGlobalLoading, loadingComponent } = useLoading();
@@ -45,6 +47,8 @@ const AppContent: React.FC = () => {
               </ProtectedRoute>
             }
           />
+          <Route path="/organizations" element={<Organizations />} />
+          <Route path="/organizations/insert" element={<OrganizationForm />} />
           <Route path="*" element={<Login />} />
         </Routes>
       </Router>
