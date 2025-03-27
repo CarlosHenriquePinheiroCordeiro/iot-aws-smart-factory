@@ -45,7 +45,7 @@ const OrganizationCard: React.FC<OrganizationCardProps> = ({ organization, delay
       animate="visible"
       transition={{ delay: delay, duration: 0.5, ease: 'easeOut' }}
     >
-    <div className='card bg-base-200 shadow-xl m-4 cursor-pointer transition-transform transform hover:scale-105 h-96'>
+    <div className='card bg-base-200 shadow-xl m-4 cursor-pointer transition-transform transform hover:scale-105' style={{'height': '23rem'}}>
         <div className="card-body flex flex-col text-center items-center">
             <h2 className="card-title" style={{ fontSize: '1.5rem' }}>{organization.name}</h2>
             <div className="my-4">
@@ -81,7 +81,7 @@ const InsertOrganizationCard: React.FC<InsertOrganizationCardProps> = ({ delay =
       initial="hidden"
       animate="visible"
       transition={{ delay: delay, duration: 0.5, ease: 'easeOut' }}>
-      <div className="card bg-base-200 shadow-xl m-4 cursor-pointer flex items-center justify-center transition-transform transform hover:scale-105 h-96">
+      <div className="card bg-base-200 shadow-xl m-4 cursor-pointer flex items-center justify-center transition-transform transform hover:scale-105" style={{'height': '23rem'}}>
         <FaPlusCircle size={'10rem'} />
         <span className="text-3xl font-bold mt-10">Insert Organization</span>
       </div>
