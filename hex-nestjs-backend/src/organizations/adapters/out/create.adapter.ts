@@ -1,11 +1,19 @@
 import { Injectable } from '@nestjs/common/decorators/core';
-import { CreateDto } from '../../dto/create.dto';
 import { CreatePort } from '../../application/ports/out/create.port';
+import { OrganizationRepository } from '../../repository/organizations.repository';
+import { Organization } from '../../Organization';
 
 @Injectable()
 export class CreateAdapter extends CreatePort {
 
-  async create(createDto: CreateDto): Promise<any> {/* LOGIC */}
+  constructor(private readonly organizationRepository: OrganizationRepository) {
+    super();
+  }
+
+  async create(organization: Organization): Promise<any> {
+
+    //this.organizationRepository.save()
+  }
 
 
 }

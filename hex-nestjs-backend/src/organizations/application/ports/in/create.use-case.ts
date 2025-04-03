@@ -1,5 +1,5 @@
-import { CreateDto } from "../../../dto/create.dto"
+import { Organization } from "../../../Organization";
 
 export abstract class CreateUseCase {
-  abstract create(createDto: CreateDto): any;
+  abstract create(organization: Organization): any;
 }

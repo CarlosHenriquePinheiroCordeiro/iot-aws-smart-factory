@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Organization } from './Organization';
-import { OrganizationMapper } from '../db/mappers/organization.mapper';
-import { OrganizationEntity } from '../db/entities/organization.entity';
-import { IRepository } from '../interfaces/repository.interface';
+import { Organization } from '../Organization';
+import { OrganizationMapper } from '../../db/mappers/organization.mapper';
+import { OrganizationEntity } from '../../db/entities/organization.entity';
+import { IRepository } from '../../interfaces/repository.interface';
 
 @Injectable()
 export class OrganizationRepository implements IRepository {
@@ -22,8 +22,8 @@ export class OrganizationRepository implements IRepository {
         return this.mapper.toDomain(organizationEntity);
     }
 
-    async save(organization: Organization): Promise<void> {
+    async save(organization: Organization): Promise<any> {
         const organizationEntity = this.mapper.toEntity(organization);
-        await this.organizationRepository.save(organizationEntity);
+        return await this.organizationRepository.save(organizationEntity);
     }
 }

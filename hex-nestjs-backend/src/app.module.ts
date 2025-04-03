@@ -5,7 +5,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import PostgreSqlDataSource from './config/pgsql/ormconfig';
 import { AuthModule } from './auth/auth.module';
 import { OrganizationsModule } from './organizations/organizations.module';
-import { HelloModule } from './hello/hello.module';
 
 @Module({
   imports: [
@@ -17,7 +16,6 @@ import { HelloModule } from './hello/hello.module';
     AuthModule,
     AwsCognitoModule,
     OrganizationsModule,
-    HelloModule
   ],
   controllers: [],
   providers: [],

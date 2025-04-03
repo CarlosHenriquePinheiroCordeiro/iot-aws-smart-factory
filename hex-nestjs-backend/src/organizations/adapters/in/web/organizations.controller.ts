@@ -10,6 +10,8 @@ import { FindByIdUseCase } from '../../../application/ports/in/findById.use-case
 import { CreateUseCase } from '../../../application/ports/in/create.use-case';
 import { UpdateUseCase } from '../../../application/ports/in/update.use-case';
 import { DeleteUseCase } from '../../../application/ports/in/delete.use-case';
+import { DtoToDomain } from '../../../../pipes/dtoToDomain.pipe';
+import { Organization } from '../../../Organization';
 
 @Controller('organizations')
 export class OrganizationsController {
@@ -21,27 +23,27 @@ export class OrganizationsController {
     private readonly deleteUseCase: DeleteUseCase,
   ) {}
 
-  @Get('/find')
+  @Get()
   async find(@Res() response: Response) {
     const resp: Partial<IHttpResponse> = (await this.findUseCase.find()) as Partial<IHttpResponse>;
     return response.status(resp.statusCode!).json(resp);
   }
 
-  @Get('/find/:id')
+  @Get('/:id')
   async findById( @Res() response: Response) {
     const resp: Partial<IHttpResponse> = (await this.findByIdUseCase.findById()) as Partial<IHttpResponse>;
     return response.status(resp.statusCode!).json(resp);
   }
 
-  @Post('/create')
-  async create(@Body() createDto: CreateDto, @Res() response: Response) {
+  @Post()
+  async create(@Body(new DtoToDomain(CreateDto, Organization)) organization: Organization, @Res() response: Response) {
     const resp: Partial<IHttpResponse> = (await this.createUseCase.create(
-        createDto,
+      organization,
     )) as Partial<IHttpResponse>;
     return response.status(resp.statusCode!).json(resp);
   }
 
-  @Patch('/update')
+  @Patch()
   async update(@Body() updateDto: UpdateDto, @Res() response: Response) {
     const resp: Partial<IHttpResponse> = (await this.updateUseCase.update(
         updateDto,
@@ -49,7 +51,7 @@ export class OrganizationsController {
     return response.status(resp.statusCode!).json(resp);
   }
 
-  @Delete('/delete')
+  @Delete()
   async delete(@Body() deleteDto: DeleteDto, @Res() response: Response) {
     const resp: Partial<IHttpResponse> = (await this.deleteUseCase.delete(
         deleteDto,

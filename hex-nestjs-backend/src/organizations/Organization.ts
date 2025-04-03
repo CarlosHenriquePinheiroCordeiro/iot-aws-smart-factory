@@ -1,4 +1,6 @@
-export class Organization {
+import { IDomain } from "../interfaces/domain.interface";
+
+export class Organization implements IDomain {
     
     constructor(
         private id: string,
