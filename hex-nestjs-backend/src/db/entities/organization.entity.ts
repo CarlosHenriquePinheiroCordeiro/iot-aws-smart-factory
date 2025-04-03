@@ -1,5 +1,4 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
-import { IEntity } from '../../interfaces/entity.interface';
 
 @Entity({ name: 'users' })
 export class OrganizationEntity {

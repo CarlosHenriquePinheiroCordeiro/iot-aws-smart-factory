@@ -21,7 +21,8 @@
     "typeorm": "typeorm-ts-node-commonjs",
     "migration:generate": "yarn typeorm migration:generate -d src/config/ormconfig.ts -n InitialMigration",
     "migration:run": "yarn typeorm migration:run -d src/config/ormconfig.ts",
-    "migration:revert": "yarn typeorm migration:revert -d src/config/ormconfig.ts"
+    "migration:revert": "yarn typeorm migration:revert -d src/config/ormconfig.ts",
+    "web": "node scripts/web.js"
   },
   "dependencies": {
     "@nestjs/axios": "^4.0.0",
