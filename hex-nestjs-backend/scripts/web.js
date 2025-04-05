@@ -32,7 +32,7 @@ const getImports = (methods, name) => {
     decorators.push('Post')
     decorators.push('Get')
     imports.push("import { IHttpResponse } from '../../../../interfaces/http-response.interface';")
-    imports.push("import { DtoToDomain } from '../../../../pipes/dtoToDomain.pipe';")
+    imports.push("import { DtoToDomainPipe } from '../../../../pipes/dtoToDomain.pipe';")
     imports.push("import { CreateDto } from '../../../dto/create.dto';")
     imports.push("import { UpdateDto } from '../../../dto/update.dto';")
     imports.push("import { DeleteDto } from '../../../dto/delete.dto';")
@@ -89,7 +89,7 @@ const getCrudMethods = (domainName) => {
   }\n`,
   
     create : `  @Post()
-  async create(@Body(new DtoToDomain(CreateDto, ${cName})) ${domainName}: ${cName}, @Res() response: Response) {
+  async create(@Body(new DtoToDomainPipe(CreateDto, ${cName})) ${domainName}: ${cName}, @Res() response: Response) {
     const resp: Partial<IHttpResponse> = (await this.createUseCase.create(
         ${domainName},
     )) as Partial<IHttpResponse>;
@@ -97,7 +97,7 @@ const getCrudMethods = (domainName) => {
   }\n`,
   
     update : `  @Patch()
-  async update(@Body(new DtoToDomain(UpdateDto, ${cName})) ${domainName}: ${cName}, @Res() response: Response) {
+  async update(@Body(new DtoToDomainPipe(UpdateDto, ${cName})) ${domainName}: ${cName}, @Res() response: Response) {
     const resp: Partial<IHttpResponse> = (await this.updateUseCase.update(
         ${domainName},
     )) as Partial<IHttpResponse>;
@@ -105,7 +105,7 @@ const getCrudMethods = (domainName) => {
   }\n`,
   
     delete : `  @Delete()
-  async delete(@Body(new DtoToDomain(DeleteDto, ${cName})) ${domainName}: ${cName}, @Res() response: Response) {
+  async delete(@Body(new DtoToDomainPipe(DeleteDto, ${cName})) ${domainName}: ${cName}, @Res() response: Response) {
     const resp: Partial<IHttpResponse> = (await this.deleteUseCase.delete(
         ${domainName},
     )) as Partial<IHttpResponse>;
@@ -381,9 +381,20 @@ const generateDtos = (moduleDir, methods) => {
   }
 }
 
+/* GENERATE ENTITY */
+const generateEntity = (baseDir, moduleName) => {
+  const dir = path.join(baseDir, 'db', 'entities', `${moduleName}.entity.ts`)
+  fs.writeFileSync(dir, (
+    `import { Entity } from 'typeorm';
+
+@Entity({ name: '${moduleName}s' })
+export class ${firstCharUppercase(moduleName)}Entity {`
+  ))
+}
+
 /* GENERATING DOMAIN CLASS */
 const generateDomain = (moduleDir, name) => {
-  const dir = path.join(moduleDir, `${firstCharUppercase(name)}`)
+  const dir = path.join(moduleDir, `${firstCharUppercase(name)}.ts`)
   fs.writeFileSync(dir, (
     `import { IDomain } from "../interfaces/domain.interface";
 
@@ -397,7 +408,56 @@ const generateRepository = (moduleDir, moduleName) => {
   const dir = path.join(moduleDir, 'repository')
   fs.mkdirSync(dir, { recursive: true });
   
-  //GENERATE DOMAIN
+  //GENERATE REPOSITORY FILE
+  const cName = firstCharUppercase(moduleName)
+  fs.writeFileSync(`${dir}/${moduleName}s.repository.ts`, (
+    `import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { ${cName} } from '../${cName}';
+import { ${cName}Mapper } from '../../db/mappers/${moduleName}.mapper';
+import { ${cName}Entity } from '../../db/entities/${moduleName}.entity';
+import { IRepository } from '../../interfaces/repository.interface';
+
+@Injectable()
+export class ${cName}Repository implements IRepository {
+
+    mapper: ${cName}Mapper = new ${cName}Mapper();
+
+    constructor(
+        @InjectRepository(${cName}Entity)
+        private readonly ${moduleName}Repository: Repository<${cName}Entity>,
+    ) {}
+
+    async findById(id: string): Promise<${cName} | null> {
+        const ${moduleName}Entity = await this.${moduleName}Repository.findOneBy({ id });
+        if (!${moduleName}Entity) return null;
+        return this.mapper.toDomain(${moduleName}Entity);
+    }
+
+    async save(${moduleName}: ${cName}): Promise<any> {
+        const ${moduleName}Entity = this.mapper.toEntity(${moduleName});
+        return await this.${moduleName}Repository.save(${moduleName}Entity);
+    }
+}`))
+  
+  //GENERATE PROVIDER
+  fs.writeFileSync(`${dir}/provider.ts`, (
+    `import { Provider } from '@nestjs/common/interfaces/modules';
+import { ${cName}Repository } from './${moduleName}s.repository';
+import { ${cName}Entity } from '../../db/entities/${moduleName}.entity';
+
+export const ${cName}sProvider: Provider[] = [
+    ${cName}Repository,
+    {
+        provide: "${cName}EntityRepository",
+        useClass: ${cName}Entity,
+    }
+]`));
+}
+
+const generateMapper = (moduleDir, moduleName) => {
+
 }
 
 /* GENERATING FILE */
@@ -422,10 +482,10 @@ generateAdaptersFolder(moduleDir, moduleName, methods);
 generateApplicationFolder(moduleDir, moduleName, methods)
 generateDtos(moduleDir, methods)
 if (isCrud) {
-  //generateEntity(baseDir, moduleName)
-  //generateDomain(moduleDir, moduleName)
-  //generateRepository(moduleDir, moduleName)
-  //generateMapper(baseDir, moduleName)
+  generateEntity(baseDir, moduleName)
+  generateDomain(moduleDir, moduleName)
+  generateRepository(moduleDir, moduleName)
+  generateMapper(baseDir, moduleName)
 }
 
 

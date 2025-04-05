@@ -5,25 +5,26 @@ import {
     BadRequestException,
     Type,
 } from '@nestjs/common';
-import { plainToInstance } from 'class-transformer';
 import { validate } from 'class-validator';
-  
+import { Mapper } from '../db/mappers/mapper';
+import { IDto } from '../interfaces/dto.interface';
+import { IDomain } from '../interfaces/domain.interface';
+
 @Injectable()
-export class DtoToDomain<IDto, IDomain> implements PipeTransform<any> {
+export class DtoToDomainPipe<TDto extends IDto, TDomain extends IDomain> implements PipeTransform<any> {
     constructor(
-        private readonly dtoClass: Type<IDto>,
-        private readonly domainClass: Type<IDomain>,
+        private readonly dtoClass: Type<TDto>,
+        private readonly domainClass: Type<TDomain>,
     ) {}
 
     async transform(value: any, metadata: ArgumentMetadata): Promise<IDomain> {
-        const dtoObject = plainToInstance(this.dtoClass, value);
-        console.log(dtoObject)
+        const dtoObject = Mapper.objectToDto(this.dtoClass, value);
         const errors = await validate(dtoObject as Object);
         if (errors.length > 0) {
             throw new BadRequestException('Data not allowed');
         }
 
-        const domainObject = plainToInstance(this.domainClass, dtoObject);
+        const domainObject = Mapper.dtoToDomain(this.domainClass, dtoObject);
 
         return domainObject;
     }

@@ -10,8 +10,8 @@ import { FindByIdUseCase } from '../../../application/ports/in/findById.use-case
 import { CreateUseCase } from '../../../application/ports/in/create.use-case';
 import { UpdateUseCase } from '../../../application/ports/in/update.use-case';
 import { DeleteUseCase } from '../../../application/ports/in/delete.use-case';
-import { DtoToDomain } from '../../../../pipes/dtoToDomain.pipe';
 import { Organization } from '../../../Organization';
+import { DtoToDomainPipe } from '../../../../pipes/dtoToDomain.pipe';
 
 @Controller('organizations')
 export class OrganizationsController {
@@ -36,7 +36,7 @@ export class OrganizationsController {
   }
 
   @Post()
-  async create(@Body(new DtoToDomain(CreateDto, Organization)) organization: Organization, @Res() response: Response) {
+  async create(@Body(new DtoToDomainPipe(CreateDto, Organization)) organization: Organization, @Res() response: Response) {
     const resp: Partial<IHttpResponse> = (await this.createUseCase.create(
       organization,
     )) as Partial<IHttpResponse>;
