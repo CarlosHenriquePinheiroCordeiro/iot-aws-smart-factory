@@ -415,14 +415,12 @@ const generateRepository = (moduleDir, moduleName) => {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ${cName} } from '../${cName}';
-import { ${cName}Mapper } from '../../db/mappers/${moduleName}.mapper';
 import { ${cName}Entity } from '../../db/entities/${moduleName}.entity';
 import { IRepository } from '../../interfaces/repository.interface';
+import { Mapper } from '../../db/mappers/mapper';
 
 @Injectable()
 export class ${cName}Repository implements IRepository {
-
-    mapper: ${cName}Mapper = new ${cName}Mapper();
 
     constructor(
         @InjectRepository(${cName}Entity)
@@ -432,13 +430,15 @@ export class ${cName}Repository implements IRepository {
     async findById(id: string): Promise<${cName} | null> {
         const ${moduleName}Entity = await this.${moduleName}Repository.findOneBy({ id });
         if (!${moduleName}Entity) return null;
-        return this.mapper.toDomain(${moduleName}Entity);
+        return Mapper.entityToDomain(${cName}, ${moduleName}Entity) as ${cName};
     }
 
     async save(${moduleName}: ${cName}): Promise<any> {
-        const ${moduleName}Entity = this.mapper.toEntity(${moduleName});
+        const ${moduleName}Entity = Mapper.domainToEntity(${cName}Entity, ${moduleName});
         return await this.${moduleName}Repository.save(${moduleName}Entity);
     }
+
+    
 }`))
   
   //GENERATE PROVIDER
@@ -485,7 +485,6 @@ if (isCrud) {
   generateEntity(baseDir, moduleName)
   generateDomain(moduleDir, moduleName)
   generateRepository(moduleDir, moduleName)
-  generateMapper(baseDir, moduleName)
 }
 
 
