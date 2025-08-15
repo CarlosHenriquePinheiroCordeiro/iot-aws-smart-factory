@@ -473,7 +473,7 @@ if (methods.includes('crud')) {
 } 
 
 let baseDir = path.join(__dirname, 'src');
-//baseDir = baseDir.replace('/scripts', '')
+baseDir = baseDir.replace('/scripts', '')
 const moduleDir = path.join(baseDir, moduleName);
 fs.mkdirSync(moduleDir, { recursive: true });
 

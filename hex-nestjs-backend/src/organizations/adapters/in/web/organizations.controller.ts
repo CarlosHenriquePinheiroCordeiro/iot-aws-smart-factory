@@ -1,6 +1,6 @@
 import { Controller } from '@nestjs/common/decorators/core';
 import { Response } from 'express';
-import { Body, Delete, Patch, Post, Res, Get } from '@nestjs/common/decorators/http';
+import { Body, Delete, Patch, Post, Res, Get, HttpCode } from '@nestjs/common/decorators/http';
 import { IHttpResponse } from '../../../../interfaces/http-response.interface';
 import { CreateDto } from '../../../dto/create.dto';
 import { UpdateDto } from '../../../dto/update.dto';
@@ -24,39 +24,44 @@ export class OrganizationsController {
   ) {}
 
   @Get()
+  @HttpCode(200)
   async find(@Res() response: Response) {
     const resp: Partial<IHttpResponse> = (await this.findUseCase.find()) as Partial<IHttpResponse>;
-    return response.status(resp.statusCode!).json(resp);
+    return response.json(resp);
   }
 
   @Get('/:id')
+  @HttpCode(200)
   async findById( @Res() response: Response) {
     const resp: Partial<IHttpResponse> = (await this.findByIdUseCase.findById()) as Partial<IHttpResponse>;
-    return response.status(resp.statusCode!).json(resp);
+    return response.json(resp);
   }
 
   @Post()
+  @HttpCode(201)
   async create(@Body(new DtoToDomainPipe(CreateDto, Organization)) organization: Organization, @Res() response: Response) {
     const resp: Partial<IHttpResponse> = (await this.createUseCase.create(
       organization,
     )) as Partial<IHttpResponse>;
-    return response.status(resp.statusCode!).json(resp);
+    return response.json(resp);
   }
 
   @Patch()
+  @HttpCode(200)
   async update(@Body() updateDto: UpdateDto, @Res() response: Response) {
     const resp: Partial<IHttpResponse> = (await this.updateUseCase.update(
-        updateDto,
+      updateDto,
     )) as Partial<IHttpResponse>;
-    return response.status(resp.statusCode!).json(resp);
+    return response.json(resp);
   }
 
   @Delete()
+  @HttpCode(200)
   async delete(@Body() deleteDto: DeleteDto, @Res() response: Response) {
     const resp: Partial<IHttpResponse> = (await this.deleteUseCase.delete(
-        deleteDto,
+      deleteDto,
     )) as Partial<IHttpResponse>;
-    return response.status(resp.statusCode!).json(resp);
+    return response.json(resp);
   }
 
 

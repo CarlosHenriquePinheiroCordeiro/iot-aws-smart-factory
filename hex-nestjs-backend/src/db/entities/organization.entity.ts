@@ -5,24 +5,24 @@ export class OrganizationEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-  @Column({nullable: false})
+  @Column({ type: 'varchar', nullable: false })
   name!: string;
 
-  @Column({nullable: true})
+  @Column({ type: 'int', nullable: true })
   number: number | undefined;
 
-  @Column({nullable: false})
+  @Column({ type: 'varchar', nullable: false })
   street!: string;
 
-  @Column({nullable: false})
+  @Column({ type: 'varchar', nullable: false })
   city!: string;
 
-  @Column({nullable: false})
+  @Column({ type: 'varchar', nullable: false })
   state!: string;
 
-  @Column({nullable: false})
+  @Column({ type: 'varchar', nullable: false })
   country!: string;
 
-  @Column({nullable: true})
+  @Column({ type: 'varchar', nullable: true })
   logoUrl!: string | undefined;
 }

@@ -1,26 +1,36 @@
 import { Type } from "@nestjs/common";
+import { plainToInstance } from 'class-transformer';
 import { IDto } from "../../interfaces/dto.interface";
 import { IDomain } from "../../interfaces/domain.interface";
-import { plainToInstance } from 'class-transformer';
 import { IEntity } from "../../interfaces/entity.interface";
 
 export class Mapper {
 
+    private static clean<T extends Record<string, any>>(obj: T): Partial<T> {
+        return Object.fromEntries(
+            Object.entries(obj).filter(([, v]) =>
+                v !== undefined &&
+                v !== null
+            )
+        ) as Partial<T>;
+    }
+
     static objectToDto = (instanceClass: Type<IDto>, object: Object): IDto => {
-        return plainToInstance(instanceClass, object);
+        return plainToInstance(instanceClass, object, { enableImplicitConversion: true });
     }
 
     static dtoToDomain = (instanceClass: Type<IDomain>, dto: IDto): IDomain => {
-        return plainToInstance(instanceClass, dto);
+        const plain = Mapper.clean(dto as any);
+        return plainToInstance(instanceClass, plain, { enableImplicitConversion: true });
     }
 
     static entityToDomain = (instanceClass: Type<IDomain>, entity: IEntity): IDomain => {
-        return plainToInstance(instanceClass, entity);
+        const plain = Mapper.clean(entity as any);
+        return plainToInstance(instanceClass, plain, { enableImplicitConversion: true });
     }
 
     static domainToEntity = (instanceClass: Type<IEntity>, domain: IDomain): IEntity => {
-        return plainToInstance(instanceClass, domain);
+        const plain = Mapper.clean(domain as any);
+        return plainToInstance(instanceClass, plain, { enableImplicitConversion: true });
     }
-
-  
 }

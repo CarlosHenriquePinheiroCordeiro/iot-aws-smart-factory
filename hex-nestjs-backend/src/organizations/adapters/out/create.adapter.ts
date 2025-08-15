@@ -11,8 +11,7 @@ export class CreateAdapter extends CreatePort {
   }
 
   async create(organization: Organization): Promise<any> {
-
-    //this.organizationRepository.save()
+    return this.organizationRepository.save(organization)
   }
 
 

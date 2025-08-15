@@ -14,6 +14,11 @@ export class OrganizationRepository implements IRepository {
         private readonly organizationRepository: Repository<OrganizationEntity>,
     ) {}
 
+    async find(): Promise<Organization[] | null> {
+        const result: OrganizationEntity[] = await this.organizationRepository.find();
+        return result.map((organizationEntity) => Mapper.entityToDomain(Organization, organizationEntity) as Organization);
+    }
+
     async findById(id: string): Promise<Organization | null> {
         const organizationEntity = await this.organizationRepository.findOneBy({ id });
         if (!organizationEntity) return null;

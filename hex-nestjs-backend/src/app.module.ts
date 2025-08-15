@@ -12,7 +12,7 @@ import { OrganizationsModule } from './organizations/organizations.module';
       envFilePath: '.env',
       isGlobal: true,
     }),
-    TypeOrmModule.forRoot(PostgreSqlDataSource.options),
+    TypeOrmModule.forRoot({...PostgreSqlDataSource.options, autoLoadEntities: true}),
     AuthModule,
     AwsCognitoModule,
     OrganizationsModule,

@@ -11,7 +11,7 @@ const OrganizationForm: React.FC = () => {
   const { setGlobalLoading } = useLoading();
 
   const [formData, setFormData] = useState<Organization>({
-    id: 0,
+    id: undefined,
     name: '',
     logo: '',
     number: '',
@@ -77,10 +77,9 @@ const OrganizationForm: React.FC = () => {
     if (!isFormComplete) return;
     try {
       setGlobalLoading(true);
-      console.log(formData)
-      //const response = await api.post('/organizations', formData);
+      const response = await api.post('/organizations', formData);
       setGlobalLoading(false);
-      //console.log('Organization submitted:', response.data);
+      console.log('Organization submitted:', response.data);
     } catch (error) {
       console.error('Error submitting organization:', error);
       setGlobalLoading(false);

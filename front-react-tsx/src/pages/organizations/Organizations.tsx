@@ -7,7 +7,7 @@ import { FaPlusCircle } from 'react-icons/fa';
 import { useNavigate } from "react-router-dom";
 
 export interface Organization {
-  id: number;
+  id: number | undefined;
   name: string;
   logo: string;
   number: string | undefined;
