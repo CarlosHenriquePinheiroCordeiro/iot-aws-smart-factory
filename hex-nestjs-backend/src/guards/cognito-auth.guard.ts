@@ -5,7 +5,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { CognitoJwtVerifier } from 'aws-jwt-verify';
-import { RedisService } from '../redis/redis.service';
+import { RedisService } from '../db/redis/redis.service';
 
 @Injectable()
 export class CognitoAuthGuard implements CanActivate {

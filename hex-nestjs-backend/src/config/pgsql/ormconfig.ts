@@ -1,6 +1,6 @@
 import { DataSource } from 'typeorm';
 
-export const PostgreSqlDataSource = new DataSource({
+export const DatabaseSource = new DataSource({
   type: 'postgres',
   host: process.env.PGSQL_HOST || 'dev-pgsql',
   port: Number(process.env.DB_PORT) || 5432,
@@ -11,4 +11,4 @@ export const PostgreSqlDataSource = new DataSource({
   logging: ['schema', 'error', 'warn'],
 });
 
-export default PostgreSqlDataSource;
+export default DatabaseSource;

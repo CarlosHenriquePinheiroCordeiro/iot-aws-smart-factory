@@ -1,0 +1,34 @@
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { IRepository } from '../../interfaces/repository.interface';
+import { OrganizationEntity } from '../../db/entities/organization.entity';
+import { Mapper } from '../../db/mappers/mapper';
+import { Organization } from '../../domain/organizations/Organization';
+
+@Injectable()
+export class OrganizationRepository implements IRepository {
+
+    constructor(
+        @InjectRepository(OrganizationEntity)
+        private readonly organizationRepository: Repository<OrganizationEntity>,
+    ) {}
+
+    async find(): Promise<Organization[] | null> {
+        const result: OrganizationEntity[] = await this.organizationRepository.find();
+        return result.map((organizationEntity) => Mapper.entityToDomain(Organization, organizationEntity) as Organization);
+    }
+
+    async findById(id: string): Promise<Organization | null> {
+        const organizationEntity = await this.organizationRepository.findOneBy({ id });
+        if (!organizationEntity) return null;
+        return Mapper.entityToDomain(Organization, organizationEntity) as Organization;
+    }
+
+    async save(organization: Organization): Promise<any> {
+        const organizationEntity = Mapper.domainToEntity(OrganizationEntity, organization);
+        return await this.organizationRepository.save(organizationEntity);
+    }
+
+    
+}

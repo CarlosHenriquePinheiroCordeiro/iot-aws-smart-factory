@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common/decorators/modules';
 import { ConfigModule } from '@nestjs/config';
-import { AwsCognitoModule } from './auth/aws-cognito/aws-cognito.module';
+import { AwsCognitoModule } from './cloud/aws/cognito/aws-cognito.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import PostgreSqlDataSource from './config/pgsql/ormconfig';
-import { AuthModule } from './auth/auth.module';
-import { OrganizationsModule } from './organizations/organizations.module';
+import DatabaseSource from './config/pgsql/ormconfig';
+import { AuthModule } from './modules/auth/auth.module';
+import { OrganizationsModule } from './domain/organizations/organizations.module';
 
 @Module({
   imports: [
@@ -12,7 +12,7 @@ import { OrganizationsModule } from './organizations/organizations.module';
       envFilePath: '.env',
       isGlobal: true,
     }),
-    TypeOrmModule.forRoot({...PostgreSqlDataSource.options, autoLoadEntities: true}),
+    TypeOrmModule.forRoot({...DatabaseSource.options, autoLoadEntities: true}),
     AuthModule,
     AwsCognitoModule,
     OrganizationsModule,

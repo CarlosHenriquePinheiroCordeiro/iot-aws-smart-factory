@@ -1,5 +1,5 @@
 import { CognitoAuthGuard } from '../../../src/guards/cognito-auth.guard';
-import { RedisService } from '../../../src/redis/redis.service';
+import { RedisService } from '../../../src/db/redis/redis.service';
 import { UnauthorizedException } from '@nestjs/common';
 import { CognitoJwtVerifier } from 'aws-jwt-verify';
 import { ExecutionContext } from '@nestjs/common';
