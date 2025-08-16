@@ -4,7 +4,7 @@ import { AwsCognitoModule } from './cloud/aws/cognito/aws-cognito.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import DatabaseSource from './config/pgsql/ormconfig';
 import { AuthModule } from './modules/auth/auth.module';
-import { OrganizationsModule } from './domain/organizations/organizations.module';
+import { OrganizationsModule } from './feature/organizations/organizations.module';
 
 @Module({
   imports: [

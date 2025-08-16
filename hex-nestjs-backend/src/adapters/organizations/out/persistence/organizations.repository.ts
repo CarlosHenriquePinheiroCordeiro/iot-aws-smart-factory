@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { IRepository } from '../../interfaces/repository.interface';
-import { OrganizationEntity } from '../../db/entities/organization.entity';
-import { Mapper } from '../../db/mappers/mapper';
-import { Organization } from '../../domain/organizations/Organization';
+import { IRepository } from '../../../../interfaces/repository.interface';
+import { OrganizationEntity } from './organization.entity';
+import { Mapper } from '../../../../db/mappers/mapper';
+import { Organization } from '../../../../domain/organizations/Organization';
 
 @Injectable()
 export class OrganizationRepository implements IRepository {
